@@ -50,7 +50,7 @@ void ATankPlayerController::aimTowardCrosshair()
 //	 UE_LOG(LogTemp, Warning, TEXT("Hit Location %s"), *emptyV.ToString());
 	if (GetSightRayHitLocation(emptyV))
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Hit Location %s"), *emptyV.ToString());
+		UE_LOG(LogTemp, Warning, TEXT("Look Direction %s"), *emptyV.ToString());
 	}
 //	 UE_LOG(LogTemp, Warning, TEXT("Hit Location X= %f"),  emptyV.X);
 	// if it hits landscape
@@ -59,6 +59,18 @@ void ATankPlayerController::aimTowardCrosshair()
 
 bool ATankPlayerController::GetSightRayHitLocation(FVector &anyFV)
 {
+	// Find the crosshair position
+	int32 ViewportSizeX, ViewportSizeY;
+
+	GetViewportSize(ViewportSizeX, ViewportSizeY);
+	FVector2D ScreenLocation;
+	ScreenLocation.X = CrossHairXLocation* ViewportSizeX;
+	ScreenLocation.Y = CrossHairYLocation * ViewportSizeY;
+	UE_LOG(LogTemp, Warning, TEXT("ViewportSizeX = %f"), ViewportSizeX);
+	UE_LOG(LogTemp, Warning, TEXT("ScreenLocation = %s"), *ScreenLocation.ToString());
+	// 'deproject' screen position of the cursor or cross hair to a world direction
+	// line trace along that direction, see what we hit, to max range
+
 	//map screen coordinates to 3D world, return is it landscape false, or true.
 	// make a list of all tanks, get their locations, add some buffer size for around the tank
 	// if crosshairs don't land in the field, return false
