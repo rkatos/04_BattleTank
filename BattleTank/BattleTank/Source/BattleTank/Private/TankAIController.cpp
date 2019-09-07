@@ -7,6 +7,7 @@
 
 
 
+
 void ATankAIController::BeginPlay()
 {
 	Super::BeginPlay();
@@ -49,17 +50,17 @@ we need to find the playerController, then find the tank, it's coordinates, and 
 	 
 	FString bulova = PlayerC->GetActorLabel();
 	FString PawnName = Gobo->GetName();
-	 UE_LOG(LogTemp, Warning, TEXT("bulova = %s"),   *bulova  );
-	 UE_LOG(LogTemp, Warning, TEXT("pawn name  = %s"), *PawnName);
+//	 UE_LOG(LogTemp, Warning, TEXT("bulova = %s"),   *bulova  );
+//	 UE_LOG(LogTemp, Warning, TEXT("pawn name  = %s"), *PawnName);
 	if (!PlayerC)
 	{
 		// we have an error
-		UE_LOG(LogTemp, Warning, TEXT("No PlayerC found\n"));
+//		UE_LOG(LogTemp, Warning, TEXT("No PlayerC found\n"));
 		return nullptr;
 	}
 	else
 	{
-		UE_LOG(LogTemp, Warning, TEXT(" PlayerC found\n"));
+//		UE_LOG(LogTemp, Warning, TEXT(" PlayerC found\n"));
 		return Cast<ATank>(Gobo);
 	}
 	
@@ -73,3 +74,21 @@ ATank* ATankAIController::GetAIControlledTank() const
 /* 
 we need to find the playerController, then find the tank, it's coordinates, and figure how to hit it. 
 */
+
+void ATankAIController::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+	if (GetPlayerTank())
+	{
+		// TODO move towards player
+
+		// Aim towards the player
+
+		// fire if ready
+	}
+	FVector AIhit;
+	ATank *AIbaby;
+	GetAIControlledTank()->AimAt( GetPlayerTank()->GetActorLocation());
+	AIbaby = GetAIControlledTank();
+//	UE_LOG(LogTemp, Warning, TEXT(" AItank = %s"),*AIbaby->GetName());
+}

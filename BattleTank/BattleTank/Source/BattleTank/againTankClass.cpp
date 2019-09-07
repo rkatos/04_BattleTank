@@ -32,3 +32,9 @@ void AagainTankClass::SetupPlayerInputComponent(UInputComponent* PlayerInputComp
 
 }
 
+bool AagainTankClass::IsThisRecognized()
+{
+	UE_LOG(LogTemp, Warning, TEXT("IsThisRecognized=%s"),"true");
+	return false;
+}
+
