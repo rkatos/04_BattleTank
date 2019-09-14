@@ -2,7 +2,7 @@
 
 
 #include "TankPlayerController.h"
- 
+#include "Tank.h"
 #include "Classes/Kismet/GameplayStatics.h"
 #include "BattleTank.h"
 
@@ -135,6 +135,9 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector &LookDirection)
 		{
 
 			FVector CameraWorldLocation = { 0.f,0.f,0.f };
+			//TODO fix this, looks like it was a dummy value!
+			CameraWorldLocation = this->PlayerCameraManager->GetCameraLocation();
+			CameraWorldLocation = PlayerCameraManager->GetCameraLocation();
 			bool DeProjectSuccess = false;
 			DeProjectSuccess = DeprojectScreenPositionToWorld(ScreenLocation.X, ScreenLocation.Y, CameraWorldLocation, LookDirection );
 			if (DeProjectSuccess)
