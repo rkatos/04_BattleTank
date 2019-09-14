@@ -3,6 +3,7 @@
 
 #include "Tank.h"
 #include "tankAimingComponent.h"
+#include "..\Public\Tank.h"
 // Sets default values
 ATank::ATank()
 {
@@ -48,4 +49,9 @@ void ATank::AimAt(FVector HitLocation)
 void ATank::SetTurretReference(UTankTurret *TurretToSet)
 {
 	TankAimingComponent->SetTurretReference(TurretToSet);
+}
+
+void ATank::Fire()
+{
+	UE_LOG(LogTemp, Warning, TEXT("Fire"));
 }
