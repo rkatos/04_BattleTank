@@ -75,10 +75,11 @@ void ATankPlayerController::aimTowardCrosshair()
 		//tell controlled tank to aim at crosshairs.
 }
 
-bool ATankPlayerController::GetSightRayHitLocation(FVector &LookDirection)
+bool ATankPlayerController::GetSightRayHitLocation(FVector &HitLocation)
 {
 	// Find the crosshair position
 	int32 ViewportSizeX, ViewportSizeY;
+	FVector LookDirection;
 
 	GetViewportSize(ViewportSizeX, ViewportSizeY);
 	FVector2D ScreenLocation;
@@ -99,31 +100,29 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector &LookDirection)
 	//	return DeProjectSuccess;
 
 	
- 	GetLookDirection(ScreenLocation, LookDirection);
+	if (GetLookDirection(ScreenLocation, LookDirection))
+	{
+		GetLookVectorHitLocation(LookDirection, HitLocation);
+	}
+	return true;
 
-	// S E C T I O N    T O    S I G H T    T A R G E T 
+ 
 
 
-	bool hitsuccess = false;
+	 
 	
-	LineTraceRange = 1000000.0f;
+	 
 	
-	hitsuccess = GetLookVectorHitLocation(LookDirection, HitLocation);
+	 
 //	DrawDebugLine(GetWorld(), StartLine,EndLine, FColor{ 255,0,0 }, false, .1f, 5, 6.0f);
-		if (hitsuccess)
-		{
-			 
-	//		UE_LOG(LogTemp, Warning, TEXT("getLook worked, %s"), *HitLocation.ToString());
-		//	if (myHitResult.Actor != nullptr)
-		//		UE_LOG(LogTemp, Warning, TEXT("actor =, %s"), *myHitResult.Actor->GetName());
-			
-		}
-		return hitsuccess;
+		
 
 		//	J U S T   A   N O T E
 		// DrawDebugLine(GetWorld(), theStart, theEnd, FColor{ 255,0,0 }, true, 5, 5, 6.0f);
 
 }
+
+
 		ATank* ATankPlayerController::GetControlledTank( )
 		{
 
@@ -131,21 +130,6 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector &LookDirection)
 			return Cast<ATank>(GetPawn());
 		}
 
-		bool ATankPlayerController::GetLookDirection(FVector2D ScreenLocation, FVector &LookDirection)
-		{
-
-			FVector CameraWorldLocation = { 0.f,0.f,0.f };
-			//TODO fix this, looks like it was a dummy value!
-			CameraWorldLocation = this->PlayerCameraManager->GetCameraLocation();
-			CameraWorldLocation = PlayerCameraManager->GetCameraLocation();
-			bool DeProjectSuccess = false;
-			DeProjectSuccess = DeprojectScreenPositionToWorld(ScreenLocation.X, ScreenLocation.Y, CameraWorldLocation, LookDirection );
-			if (DeProjectSuccess)
-			{
-			 //	UE_LOG(LogTemp, Warning, TEXT("success,BBB Deproject! %s"), *LookDirection.ToString());
-			}
-			return DeProjectSuccess;
-		}
 
 
 		bool ATankPlayerController::GetLookVectorHitLocation(FVector LookDirection, FVector &HitLocation)
@@ -161,7 +145,24 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector &LookDirection)
 			))
 			{
 				HitLocation = HitResult.Location;
+				UE_LOG(LogTemp, Warning, TEXT("good Hit,tankplayctrl"));
 				return true;
 			}
+			UE_LOG(LogTemp, Warning, TEXT("bad Hit,tankplayctrl"));
+			HitLocation = FVector(0);
 			return false;
+		}
+		bool ATankPlayerController::GetLookDirection(FVector2D ScreenLocation, FVector &LookDirection)
+		{
+
+			FVector CameraWorldLocation;
+
+			/*CameraWorldLocation = this->PlayerCameraManager->GetCameraLocation();
+			CameraWorldLocation = PlayerCameraManager->GetCameraLocation();*/
+			bool DeProjectSuccess = false;
+			return  DeprojectScreenPositionToWorld(
+				ScreenLocation.X,
+				ScreenLocation.Y,
+				CameraWorldLocation,
+				LookDirection);
 		}

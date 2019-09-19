@@ -57,7 +57,7 @@ void ATank::SetTurretReference(UTankTurret *TurretToSet)
 
 void ATank::Fire()
 {
-	
+	return;
 	bool IsReloaded = (FPlatformTime::Seconds() - LastFireTime) > ReloadTimeInSeconds;
 
 	if (IsReloaded && Barrel) {
