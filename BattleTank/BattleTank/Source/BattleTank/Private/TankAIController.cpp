@@ -3,7 +3,7 @@
 #include "Tank.h"
 #include "BattleTank.h"
 #include "TankPlayerController.h"
-#include "GameFramework/Actor.h"
+//#include "GameFramework/Actor.h"
 #include "Engine/World.h"
 
 
@@ -28,6 +28,7 @@ void ATankAIController::Tick(float DeltaTime)
 	auto ControlledTank = Cast<ATank>(GetPawn());
 	if (PlayerTank)
 	{
+		MoveToActor(PlayerTank, AcceptanceRadius);
 		// TODO move towards player
 
 		// Aim towards the player
@@ -40,7 +41,7 @@ void ATankAIController::Tick(float DeltaTime)
 
 		 ControlledTank->Fire(); //TODO Limit Firing Rate!
 	}
-
+	 
 }
 
 

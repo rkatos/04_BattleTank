@@ -145,7 +145,7 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector &HitLocation)
 			))
 			{
 				HitLocation = HitResult.Location;
-				UE_LOG(LogTemp, Warning, TEXT("good Hit,tankplayctrl"));
+			//	UE_LOG(LogTemp, Warning, TEXT("good Hit,tankplayctrl"));
 				return true;
 			}
 			UE_LOG(LogTemp, Warning, TEXT("bad Hit,tankplayctrl"));

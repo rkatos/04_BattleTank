@@ -12,6 +12,7 @@ class UTankBarrel;
 class UtankAimingComponent;
 class UTankTurret;
 class AProjectile;
+class UTankMovementComponent;
 
 UCLASS()
 class BATTLETANK_API ATank : public APawn
@@ -48,6 +49,9 @@ private:
 
 	UTankBarrel *Barrel = nullptr; // local barrel reference
 
+	UPROPERTY(EditAnywhere, Category = "Setup")
+		bool AllowFire = false;
+
 
 
 	double LastFireTime = 0;
@@ -57,6 +61,7 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 	UtankAimingComponent* TankAimingComponent = nullptr;
+	UTankMovementComponent* TankMovementComponent = nullptr;
 
 
 public:	

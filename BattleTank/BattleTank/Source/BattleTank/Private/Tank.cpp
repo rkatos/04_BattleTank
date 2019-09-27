@@ -3,6 +3,7 @@
 
 #include "Tank.h"
 #include "tankAimingComponent.h"
+#include "TankMovementComponent.h"
 #include "Engine.h"
 #include "TankBarrel.h"
 #include "Projectile.h"
@@ -14,6 +15,7 @@ ATank::ATank()
 	PrimaryActorTick.bCanEverTick = true;
 	// no need to protect pointers as added at construction
 	TankAimingComponent = CreateDefaultSubobject<UtankAimingComponent>(FName("AimingComponent"));
+	//TankMovementComponent = CreateDefaultSubobject<UTankMovementComponent>(FName("MovementComponent"));
 }
 
 
@@ -57,10 +59,10 @@ void ATank::SetTurretReference(UTankTurret *TurretToSet)
 
 void ATank::Fire()
 {
-	return;
+ 
 	bool IsReloaded = (FPlatformTime::Seconds() - LastFireTime) > ReloadTimeInSeconds;
 
-	if (IsReloaded && Barrel) {
+	if (IsReloaded && Barrel && AllowFire) {
 		UE_LOG(LogTemp, Warning, TEXT("Fire"));
 
 		auto Projectile = 

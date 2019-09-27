@@ -29,6 +29,9 @@ private:
 	virtual void BeginPlay() override;
 
  
+		float AcceptanceRadius = 3000.0; //how close to the player
+
+ 
 
 	 
 };
